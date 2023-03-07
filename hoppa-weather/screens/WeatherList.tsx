@@ -7,8 +7,8 @@ import { LocationObject } from 'expo-location';
 function WeatherList() {
   const [weatherForecast, setWeatherForecast] = useState();
   const [location, setLocation] = useState<LocationObject>();
-  const [errorMsg, setErrorMsg] = useState(null);
-  console.log('weatherForecast', weatherForecast);
+  const [errorMsg, setErrorMsg] = useState<string>();
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -19,42 +19,36 @@ function WeatherList() {
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log('location lat', location.coords.latitude);
-      console.log('location long', location.coords.longitude);
     })();
   }, []);
 
-  let text = 'Waiting..';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
-
   useEffect(() => {
+    const locationCoords = `${location?.coords.latitude}, ${location?.coords.longitude}`;
     const getWeather = async () => {
       try {
         const response = await fetch(
-          'https://api.weatherapi.com/v1/forecast.json?key=d5f2df6ca375402faed103236230603&q=Paris&days=7'
+          location?.coords
+            ? `https://api.weatherapi.com/v1/forecast.json?key=d5f2df6ca375402faed103236230603&q=${locationCoords}&days=7`
+            : 'https://api.weatherapi.com/v1/forecast.json?key=d5f2df6ca375402faed103236230603&q=Bangkok&days=7'
         );
         const data = await response.json();
-        setWeatherForecast(data.forecast.forecastday);
+        setWeatherForecast(data?.forecast?.forecastday);
       } catch (error) {
-        console.log('Error', error);
+        setErrorMsg('Error fetching weather data');
       }
     };
     getWeather();
-  }, []);
+  }, [location]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        // style={styles.list}
-        // contentContainerStyle={styles.listContent}
-        data={weatherForecast}
-        renderItem={({ item }) => <WeatherCard item={item} />}
-        // keyExtractor={(item) => item.ref}
-      />
+      {weatherForecast && (
+        <FlatList
+          data={weatherForecast}
+          renderItem={({ item }) => <WeatherCard item={item} />}
+        />
+      )}
+      {errorMsg && <Text>{errorMsg}</Text>}
     </SafeAreaView>
   );
 }
