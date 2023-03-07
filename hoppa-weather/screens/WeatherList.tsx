@@ -23,8 +23,8 @@ function WeatherList() {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        style={styles.list}
-        contentContainerStyle={styles.listContent}
+        // style={styles.list}
+        // contentContainerStyle={styles.listContent}
         data={weatherForecast}
         renderItem={({ item }) => <WeatherCard item={item} />}
         // keyExtractor={(item) => item.ref}
@@ -35,15 +35,6 @@ function WeatherList() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'pink',
-  },
-  list: {
-    borderRadius: 8,
-    marginHorizontal: 15,
-  },
-  listContent: {
-    marginVertical: 30,
-    borderRadius: 8,
   },
 });
 export default WeatherList;

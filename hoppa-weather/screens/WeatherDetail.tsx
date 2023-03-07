@@ -22,7 +22,7 @@ function WeatherDetail() {
           </View>
           <View>
             <Text style={styles.text}>
-              min {info.mintemp_c}C max {info.maxtemp_c}C
+              min {info.mintemp_c}°C max {info.maxtemp_c}°C
             </Text>
           </View>
           <View>
