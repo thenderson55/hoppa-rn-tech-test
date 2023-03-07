@@ -3,6 +3,7 @@ export type WeatherType = {
     mintemp_c: string;
     maxtemp_c: string;
     condition: { text: string };
+    daily_chance_of_rain: string;
   };
 };
 

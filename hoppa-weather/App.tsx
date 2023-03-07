@@ -12,20 +12,17 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='WeatherList'>
-        <Stack.Screen name='WeatherList' component={WeatherList} />
+        <Stack.Screen
+          name='WeatherList'
+          options={{ title: '7-day Forecast' }}
+          component={WeatherList}
+        />
         <Stack.Screen
           name='WeatherDetail'
-          // options={{
-          //   header: () => null,
-          // }}
+          options={{ title: 'Weather Detail' }}
           component={WeatherDetail}
         />
       </Stack.Navigator>
-
-      {/* <View style={styles.container}>
-        <Text>Open up App.tsx to start working on your app!</Text>
-        <StatusBar style='auto' />
-      </View> */}
     </NavigationContainer>
   );
 }
