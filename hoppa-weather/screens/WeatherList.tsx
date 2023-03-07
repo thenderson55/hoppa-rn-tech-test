@@ -1,10 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, Text, StyleSheet } from 'react-native';
 import WeatherCard from '../components/WeatherCard';
+import * as Location from 'expo-location';
+import { LocationObject } from 'expo-location';
 
 function WeatherList() {
   const [weatherForecast, setWeatherForecast] = useState();
+  const [location, setLocation] = useState<LocationObject>();
+  const [errorMsg, setErrorMsg] = useState(null);
   console.log('weatherForecast', weatherForecast);
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      console.log('location lat', location.coords.latitude);
+      console.log('location long', location.coords.longitude);
+    })();
+  }, []);
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
   useEffect(() => {
     const getWeather = async () => {
       try {
