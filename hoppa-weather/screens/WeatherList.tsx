@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
   listContent: {
-    marginBottom: 50,
+    marginVertical: 30,
     borderRadius: 8,
   },
 });

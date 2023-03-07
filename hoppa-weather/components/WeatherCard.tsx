@@ -38,8 +38,6 @@ function WeatherCard(props: Props) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    marginVertical: 8,
-    borderRadius: 8,
     borderWidth: 2,
     borderColor: 'black',
   },

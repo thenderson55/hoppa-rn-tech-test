@@ -7,6 +7,6 @@ export type WeatherType = {
 };
 
 export type WeatherStackParams = {
-  WeatherDetail: any;
+  WeatherDetail: { item: WeatherType };
   WeatherList: undefined;
 };
